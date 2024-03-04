@@ -1,0 +1,38 @@
+{% extends 'main/base.html'%}
+{% block title %} allocated Blocks {% endblock %}
+<style>
+    .change-btn:hover {
+        background-color: #08a000;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        cursor: pointer;
+        
+    }
+</style>
+{% block content %}
+<h1>Allocated Blocks</h1>
+<table class="table table-striped-columns border-primary">
+    <tr>
+        <th>No.</th>
+        <th>Name </th>
+        <th>Date </th>
+        <th>Time </th>
+        <th>Allocated Block </th>
+        <th>Request to Change </th>
+    </tr>
+    {% for i in data %}
+    <tr>
+        {% with idx=forloop.counter %}
+        <td>{{idx}}</td>
+        <td>{{i.2}}</td>
+        <td>{{i.0}}</td>
+        <td>{{i.1}}</td>
+        <td>{{i.3}}</td>
+        <td><input type="submit" value="Change" class="change-btn" style="background-color: #3498db; width:200px; margin:0"></td>
+        {% endwith %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

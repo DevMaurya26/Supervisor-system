@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block title %}Create{% endblock %}
+
+{% block profile %}
+{% endblock %}
+
+{% block content %}
+<h1>WElcome to create page</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="">dates</label><input type="file" name="date_csv" id=""><br>
+    <label for="">Names</label><input type="file" name="name_csv" id=""><br>
+    <input type="submit" value="Create">
+</form>
+
+{% if err_flag %}
+    <p>{{error}}</p>
+{% else %}
+    <p>{{Done}}</p>
+{% endif %}
+
+<h3>Previously created Allocations</h3>
+<table class="table table-bordered border-primary">
+    <tr>
+        <th>No.</th>
+        <th>Date</th>
+        <th>FileNames</th>
+    </tr>
+    {% for file in user_files %}
+    <tr>
+        {% with idx=forloop.counter %}
+        <td>{{idx}}</td>
+        <td>{{ file.Created_at }}</td>
+        <td><a href="{% url 'file_res' file_name=file.file_name %}">{{ file.file_name }}</a></td>
+        {% endwith %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
