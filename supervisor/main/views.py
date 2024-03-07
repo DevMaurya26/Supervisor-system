@@ -19,6 +19,7 @@ def index(request):
 def create(request):
     flag1 = False
     flag2 = False
+    exam_name = request.POST.get('exam_name')
     user_instance = User.objects.get(pk=request.user.id)
     user_files = Allocation_File.objects.filter(user_id=user_instance)
 
@@ -42,7 +43,7 @@ def create(request):
 
         print(flag1,"------",flag2)
         if flag1 and flag2:
-            final_file_name = allocations.do_allocations(request.user.id)
+            final_file_name = allocations.do_allocations(request.user.id,exam_name)
             with open('./CSVfiles/generated_files/0files.txt', 'a') as f:
                 f.write(final_file_name+'\n')
 
@@ -55,7 +56,7 @@ def create(request):
 
 @login_required(login_url='login')
 def generated(request):
-    UserName = request.user.username
+    UserName = request.user.first_name
     with open('./CSVfiles/generated_files/0files.txt', 'r') as f:
         name = f.read().split('\n')
         print(name)

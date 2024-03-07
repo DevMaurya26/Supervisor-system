@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
+from main.form import UserRegisterForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .middelwear import alreadyLogedIn # Custom Middelwear made by me(Dev)
@@ -12,15 +13,15 @@ def register_view(request):
     '''
     if request.POST:
         # here we are getting data from user and storing in form
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():  # checking is the form is valid or not?
             user = form.save()
             login(request, user)  # built in login method
 
             return redirect('dashboard')
     else: # if form is not valid then return null form..
-        initial_data = {'username':'','password1':'','password2':''}
-        form = UserCreationForm(initial=initial_data)
+        initial_data = {'username':'','password1':'','password2':'','email':'','first_name':''}
+        form = UserRegisterForm(initial=initial_data)
 
     return render(request, 'auth/RegisterForm.html', {'form': form})
 

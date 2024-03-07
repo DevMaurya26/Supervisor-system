@@ -8,7 +8,7 @@ from main.models import Allocation_File
 class allocations:
 
 
-    def do_allocations(user_id):
+    def do_allocations(user_id,exam_name):
         # do some work
         date_csv = pd.read_csv('./CSVfiles/raw_files/dates.csv')
         name_csv = pd.read_csv('./CSVfiles/raw_files/names.csv')
@@ -40,7 +40,7 @@ class allocations:
         file_name = timestamp_str.replace(':', '_').replace('.', '_') + '.csv'
 
         user_instance = User.objects.get(pk=user_id)
-        obj = Allocation_File(user_id=user_instance,file_name=file_name)
+        obj = Allocation_File(user_id=user_instance,file_name=file_name,exam_name=exam_name)
         obj.save()
         print("File Saved")
 
@@ -61,6 +61,7 @@ class allocations:
         data = data[data['Name'] == name]
 
         data = np.array(data)
+        print(data)
         return data
          
 

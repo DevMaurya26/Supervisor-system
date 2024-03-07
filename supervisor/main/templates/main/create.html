@@ -1,9 +1,6 @@
 {% extends 'main/base.html' %}
 {% block title %}Create{% endblock %}
 
-{% block profile %}
-{% endblock %}
-
 {% block content %}
 <h1>WElcome to create page</h1>
 
@@ -11,6 +8,7 @@
     {% csrf_token %}
     <label for="">dates</label><input type="file" name="date_csv" id=""><br>
     <label for="">Names</label><input type="file" name="name_csv" id=""><br>
+    <input type="text" placeholder="ExamName" name="exam_name"> <br>
     <input type="submit" value="Create">
 </form>
 
@@ -25,17 +23,18 @@
     <tr>
         <th>No.</th>
         <th>Date</th>
+        <th>Exam Name</th>
         <th>FileNames</th>
     </tr>
     {% for file in user_files %}
     <tr>
         {% with idx=forloop.counter %}
         <td>{{idx}}</td>
-        <td>{{ file.Created_at }}</td>
+        <td>{{ file.Created_at }}</td> 
+        <td>{{ file.exam_name }}</td>
         <td><a href="{% url 'file_res' file_name=file.file_name %}">{{ file.file_name }}</a></td>
         {% endwith %}
     </tr>
-    {% endfor %}
-</table>
+    {% endfor %}</table>
 {% endblock %}
 
